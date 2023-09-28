@@ -28,7 +28,7 @@ public class Hotel extends Building{
 
     public static boolean unregister(int id){
         try {
-            Database.deleteHotel(id);
+            Database.deleteTable("hotels" ,id);
         } catch (SQLException e) {
             return false;
         }

@@ -45,7 +45,7 @@ public class Employee extends Person{
 
     public boolean deleteUser(int id){
         try {
-            Database.deleteUser(id);
+            Database.deleteTable("users", id);
         } catch (SQLException e) {
             return false;
         }
@@ -96,7 +96,7 @@ public class Employee extends Person{
 
     public boolean deleteAccount(){
         try {
-            Database.deleteEmployee(this.id);
+            Database.deleteTable("employees", this.id);
         } catch (SQLException e) {
             return false;
         }

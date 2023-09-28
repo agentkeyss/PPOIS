@@ -23,7 +23,7 @@ public class SignUpAndCreationTests {
     }
 
     @Test
-    public void signUpUserTest() throws SQLException {
+    public void signUpUserTest() {
         User user = new User("Steve", "Jobs", "+375129845687", Gender.MALE, LocalDate.of(1955, 2, 24),
                 "jobs@mail.ru", "stevejobs1955");
         Assert.assertTrue(user.signUp());

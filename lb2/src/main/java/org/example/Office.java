@@ -18,7 +18,7 @@ public class Office extends Building{
 
     public static boolean unregister(int id) {
         try {
-            Database.deleteOffice(id);
+            Database.deleteTable("offices", id);
         } catch (SQLException e) {
             return false;
         }

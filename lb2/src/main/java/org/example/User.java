@@ -27,10 +27,15 @@ public class User extends Person{
         return true;
     }
 
-    public boolean signIn(String phoneNumberOrEmail, String password) throws SQLException {
-        User user = Database.getUserByEmail(phoneNumberOrEmail, password);
-        if (user == null) user = Database.getUserByPhoneNumber(phoneNumberOrEmail, password);
-        if (user == null) return false;
+    public boolean signIn(String phoneNumberOrEmail, String password) {
+        User user = null;
+        try {
+            user = Database.getUserByEmail(phoneNumberOrEmail, password);
+            if (user == null) user = Database.getUserByPhoneNumber(phoneNumberOrEmail, password);
+            if (user == null) return false;
+        } catch (SQLException e) {
+            return false;
+        }
 
         this.name = user.name;
         this.surname = user.surname;
@@ -65,13 +70,11 @@ public class User extends Person{
 
     public boolean deleteAccount() {
         try {
-            Database.deleteUser(this.id);
+            Database.deleteTable("users", this.id);
         } catch (SQLException e) {
             return false;
         }
         return true;
     }
-
-
 
 }

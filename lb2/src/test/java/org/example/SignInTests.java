@@ -18,7 +18,7 @@ public class SignInTests {
     }
 
     @Test
-    public void signInUserTest() throws SQLException {
+    public void signInUserTest() {
         User user = new User();
         user.signIn("+375129845687", "stevejobs1955");
         User exceptedUser = new User("Steve", "Jobs", "+375129845687", Gender.MALE, LocalDate.of(1955, 2, 24),

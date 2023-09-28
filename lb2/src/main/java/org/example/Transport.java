@@ -27,7 +27,7 @@ public class Transport {
 
     public static boolean unregister(int id) {
         try {
-            Database.deleteTransport(id);
+            Database.deleteTable("transports", id);
         } catch (SQLException e) {
             return false;
         }

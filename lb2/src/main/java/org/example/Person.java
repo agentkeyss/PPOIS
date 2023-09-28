@@ -88,6 +88,6 @@ abstract public class Person{
 
     @Override
     public int hashCode() {
-        return Objects.hash(id, name, surname, birthDate, hashedPassword, registrationDateTime, phoneNumber, gender, email);
+        return Objects.hash(name, surname, birthDate, hashedPassword, phoneNumber, gender, email);
     }
 }

@@ -16,7 +16,7 @@ public class DeleteTests {
     }
 
     @Test
-    public void deleteUserTest() throws SQLException {
+    public void deleteUserTest(){
         User user = new User();
         user.signIn("+375129845687", "stevejobs1955");
         user.deleteOrder(1);

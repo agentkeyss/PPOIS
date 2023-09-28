@@ -10,15 +10,20 @@ import java.time.format.DateTimeFormatter;
 public class Database{
     private static final String DATABASE = "tourist_agency";
     private static final String PASSWORD = "1q2w3e4r5t6y7u8i";
+    private static final String USER = "tour_admin";
 
-    public static boolean addUser(User user) throws SQLException {
-
+    public static Statement getStatement() throws SQLException {
         Connection connection = DriverManager.getConnection(
                 "jdbc:mysql://localhost:3306/" + DATABASE,
-                "tour_admin",
-                "1q2w3e4r5t6y7u8i"
+                USER,
+                PASSWORD
         );
-        Statement statement = connection.createStatement();
+
+        return connection.createStatement();
+    }
+
+    public static boolean addUser(User user) throws SQLException {
+        Statement statement = getStatement();
         int updatedRowsCount = statement.executeUpdate(String.format("INSERT INTO users(name, surname, " +
                         "hashed_password, phone_number, gender, birth_date, email, registration_date_and_time) " +
                         "VALUES('%s', '%s', '%s', '%s', '%s', '%s', '%s', '%s')",
@@ -26,18 +31,12 @@ public class Database{
                 user.getGender(), user.getBirthDate(), user.getEmail(),
                 user.getRegistrationDateTime().format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss"))
                 ));
-
-        connection.close();
+        
         return updatedRowsCount > 0;
     }
 
     public static boolean addEmployee(Employee employee) throws SQLException {
-        Connection connection = DriverManager.getConnection(
-                "jdbc:mysql://localhost:3306/" + DATABASE,
-                "tour_admin",
-                PASSWORD
-        );
-        Statement statement = connection.createStatement();
+        Statement statement = getStatement();
         int updatedRowsCount = statement.executeUpdate(String.format("INSERT INTO employees(name, surname, " +
                         "hashed_password, phone_number, gender, birth_date, email, salary, department, job_title," +
                         "came_to_company_date, registration_date_and_time, office_id) " +
@@ -50,17 +49,12 @@ public class Database{
                 employee.getOfficeID()
                 ));
 
-        connection.close();
+        
         return updatedRowsCount > 0;
     }
 
     public static boolean addOrder(Order order) throws SQLException {
-        Connection connection = DriverManager.getConnection(
-                "jdbc:mysql://localhost:3306/" + DATABASE,
-                "tour_admin",
-                PASSWORD
-        );
-        Statement statement = connection.createStatement();
+        Statement statement = getStatement();
         int updatedRowsCount = statement.executeUpdate(String.format("INSERT INTO orders(departure_date_and_time, arrival_date_and_time, " +
                         "order_date_and_time, departure_country, departure_city, arrival_city," +
                         "arrival_country, cost, days_duration, cipher, transport_id, hotel_id) " +
@@ -72,61 +66,41 @@ public class Database{
                 order.getDepartureCountry(), order.getArrivalCountry(), order.getCost(), order.getDaysDuration(),
                 order.getCipher(), order.getTransportID(), order.getHotelID()));
 
-        connection.close();
+        
         return updatedRowsCount > 0;
     }
 
     public static boolean setCustomerToOrder(int orderID, int customerID) throws SQLException {
-        Connection connection = DriverManager.getConnection(
-                "jdbc:mysql://localhost:3306/" + DATABASE,
-                "tour_admin",
-                PASSWORD
-        );
-        Statement statement = connection.createStatement();
+        Statement statement = getStatement();
         int updatedRowsCount = statement.executeUpdate(String.format("UPDATE orders SET customer_id = %d " +
                 "WHERE id = %d", customerID, orderID));
 
-        connection.close();
+        
         return updatedRowsCount > 0;
     }
 
     public static boolean deleteCustomerFromOrder(int orderID) throws SQLException {
-        Connection connection = DriverManager.getConnection(
-                "jdbc:mysql://localhost:3306/" + DATABASE,
-                "tour_admin",
-                PASSWORD
-        );
-        Statement statement = connection.createStatement();
+        Statement statement = getStatement();
         int updatedRowsCount = statement.executeUpdate(String.format("UPDATE orders SET customer_id = null " +
                 "WHERE id = %d", orderID));
 
-        connection.close();
+        
         return updatedRowsCount > 0;
     }
 
     public static boolean addTransport(Transport transport) throws SQLException {
-        Connection connection = DriverManager.getConnection(
-                "jdbc:mysql://localhost:3306/" + DATABASE,
-                "tour_admin",
-                PASSWORD
-        );
-        Statement statement = connection.createStatement();
+        Statement statement = getStatement();
         int updatedRowsCount = statement.executeUpdate(String.format("INSERT INTO transports(model, number_of_seats, " +
                         "transport_type, max_speed) " +
                         "VALUES('%s', '%s', '%s', '%s')", transport.getModel(), transport.getSeatsNumber(),
                 transport.getTransportType(), transport.getMaxSpeed()));
 
-        connection.close();
+        
         return updatedRowsCount > 0;
     }
 
     public static boolean addHotel(Hotel hotel) throws SQLException {
-        Connection connection = DriverManager.getConnection(
-                "jdbc:mysql://localhost:3306/" + DATABASE,
-                "tour_admin",
-                PASSWORD
-        );
-        Statement statement = connection.createStatement();
+        Statement statement = getStatement();
         int updatedRowsCount = statement.executeUpdate(String.format("INSERT INTO hotels(name, hotel_type, " +
                         "rooms_count, stars_count, country, city, building_number, contact_phone_number, street) " +
                         "VALUES('%s', '%s', '%s', '%s', '%s', '%s', '%s', '%s', '%s')",
@@ -135,17 +109,12 @@ public class Database{
                 hotel.getStreet()
                 ));
 
-        connection.close();
+        
         return updatedRowsCount > 0;
     }
 
     public static boolean addOffice(Office office) throws SQLException {
-        Connection connection = DriverManager.getConnection(
-                "jdbc:mysql://localhost:3306/" + DATABASE,
-                "tour_admin",
-                PASSWORD
-        );
-        Statement statement = connection.createStatement();
+        Statement statement = getStatement();
         int updatedRowsCount = statement.executeUpdate(String.format("INSERT INTO offices(country, city, " +
                         "building_number, contact_phone_number, street) " +
                         "VALUES('%s', '%s', '%s', '%s', '%s')",
@@ -153,17 +122,12 @@ public class Database{
                 office.getStreet()
         ));
 
-        connection.close();
+        
         return updatedRowsCount > 0;
     }
 
     public static boolean isPersonExistByPhoneNumber(String phoneNumber) throws SQLException {
-        Connection connection = DriverManager.getConnection(
-                "jdbc:mysql://localhost:3306/" + DATABASE,
-                "tour_admin",
-                PASSWORD
-        );
-        Statement statement = connection.createStatement();
+        Statement statement = getStatement();
         ResultSet resultSet = statement.executeQuery(String.format("SELECT * FROM users WHERE phone_number = " +
                 "'%s'", phoneNumber));
 
@@ -178,12 +142,7 @@ public class Database{
     }
 
     public static boolean isPersonExistByEmail(String email) throws SQLException {
-        Connection connection = DriverManager.getConnection(
-                "jdbc:mysql://localhost:3306/" + DATABASE,
-                "tour_admin",
-                PASSWORD
-        );
-        Statement statement = connection.createStatement();
+        Statement statement = getStatement();
         ResultSet resultSet = statement.executeQuery(String.format("SELECT * FROM users WHERE email = " +
                 "'%s'", email));
 
@@ -200,12 +159,7 @@ public class Database{
     public static User getUserByPhoneNumber(String phoneNumber, String password) throws SQLException {
         User user = null;
 
-        Connection connection = DriverManager.getConnection(
-                "jdbc:mysql://localhost:3306/" + DATABASE,
-                "tour_admin",
-                PASSWORD
-        );
-        Statement statement = connection.createStatement();
+        Statement statement = getStatement();
         ResultSet resultSet = statement.executeQuery(String.format("SELECT * FROM users " +
                 "WHERE phone_number = '%s' AND hashed_password = '%s'", phoneNumber, DigestUtils.sha256Hex(password)));
         while(resultSet.next()) {
@@ -227,12 +181,7 @@ public class Database{
     public static User getUserByEmail(String email, String password) throws SQLException {
         User user = null;
 
-        Connection connection = DriverManager.getConnection(
-                "jdbc:mysql://localhost:3306/" + DATABASE,
-                "tour_admin",
-                PASSWORD
-        );
-        Statement statement = connection.createStatement();
+        Statement statement = getStatement();
         ResultSet resultSet = statement.executeQuery(String.format("SELECT * FROM users " +
                 "WHERE email = '%s' AND hashed_password = '%s'", email, DigestUtils.sha256Hex(password)));
         while(resultSet.next()) {
@@ -254,12 +203,7 @@ public class Database{
     public static Employee getEmployeeByPhoneNumber(String phoneNumber, String password) throws SQLException {
         Employee employee = null;
 
-        Connection connection = DriverManager.getConnection(
-                "jdbc:mysql://localhost:3306/" + DATABASE,
-                "tour_admin",
-                PASSWORD
-        );
-        Statement statement = connection.createStatement();
+        Statement statement = getStatement();
 
         ResultSet resultSet = statement.executeQuery(String.format("SELECT * FROM employees " +
                 "WHERE phone_number = '%s' AND hashed_password = '%s'", phoneNumber, DigestUtils.sha256Hex(password)));
@@ -289,16 +233,11 @@ public class Database{
     public static Employee getEmployeeByEmail(String email, String password) throws SQLException {
         Employee employee = null;
 
-        Connection connection = DriverManager.getConnection(
-                "jdbc:mysql://localhost:3306/" + DATABASE,
-                "tour_admin",
-                PASSWORD
-        );
-        Statement statement = connection.createStatement();
+        Statement statement = getStatement();
 
         ResultSet resultSet = statement.executeQuery(String.format("SELECT * FROM employees " +
                 "WHERE email = '%s' AND hashed_password = '%s'", email, DigestUtils.sha256Hex(password)));
-        while(resultSet.next()) {
+        if(resultSet.next()) {
             String name = resultSet.getString(2);
             String surname = resultSet.getString(3);
             double salary = resultSet.getDouble(6);
@@ -324,12 +263,7 @@ public class Database{
     public static int getHotelID(String country, String city, String street, int buildingNumber) throws SQLException {
         int id = -1;
 
-        Connection connection = DriverManager.getConnection(
-                "jdbc:mysql://localhost:3306/" + DATABASE,
-                "tour_admin",
-                PASSWORD
-        );
-        Statement statement = connection.createStatement();
+        Statement statement = getStatement();
         ResultSet resultSet = statement.executeQuery(String.format("SELECT * FROM hotels " +
                 "WHERE country = '%s' AND city = '%s' AND street = '%s' AND building_number = %d", country, city, street,
                 buildingNumber));
@@ -343,12 +277,7 @@ public class Database{
     public static int getTransportID(String model, TransportType transportType) throws SQLException {
         int id = -1;
 
-        Connection connection = DriverManager.getConnection(
-                "jdbc:mysql://localhost:3306/" + DATABASE,
-                "tour_admin",
-                PASSWORD
-        );
-        Statement statement = connection.createStatement();
+        Statement statement = getStatement();
         ResultSet resultSet = statement.executeQuery(String.format("SELECT * FROM transports " +
                 "WHERE model = '%s' AND transport_type = '%s'", model, transportType));
         while(resultSet.next()) {
@@ -361,12 +290,7 @@ public class Database{
     public static int getOfficeID(String country, String city, String street, int buildingNumber) throws SQLException {
         int id = -1;
 
-        Connection connection = DriverManager.getConnection(
-                "jdbc:mysql://localhost:3306/" + DATABASE,
-                "tour_admin",
-                PASSWORD
-        );
-        Statement statement = connection.createStatement();
+        Statement statement = getStatement();
         ResultSet resultSet = statement.executeQuery(String.format("SELECT * FROM offices " +
                         "WHERE country = '%s' AND city = '%s' AND street = '%s' AND building_number = %d", country, city, street,
                 buildingNumber));
@@ -377,74 +301,9 @@ public class Database{
         return id;
     }
 
-    public static boolean deleteHotel(int id) throws SQLException {
-        Connection connection = DriverManager.getConnection(
-                "jdbc:mysql://localhost:3306/" + DATABASE,
-                "tour_admin",
-                PASSWORD
-        );
-        Statement statement = connection.createStatement();
-        int deletedRows = statement.executeUpdate(String.format("DELETE FROM hotels WHERE id = %d", id));
-
-        return deletedRows > 0;
-    }
-
-    public static boolean deleteOffice(int id) throws SQLException {
-        Connection connection = DriverManager.getConnection(
-                "jdbc:mysql://localhost:3306/" + DATABASE,
-                "tour_admin",
-                PASSWORD
-        );
-        Statement statement = connection.createStatement();
-        int deletedRows = statement.executeUpdate(String.format("DELETE FROM offices WHERE id = %d", id));
-
-        return deletedRows > 0;
-    }
-
-    public static boolean deleteUser(int id) throws SQLException {
-        Connection connection = DriverManager.getConnection(
-                "jdbc:mysql://localhost:3306/" + DATABASE,
-                "tour_admin",
-                PASSWORD
-        );
-        Statement statement = connection.createStatement();
-        int deletedRows = statement.executeUpdate(String.format("DELETE FROM users WHERE id = %d", id));
-
-        return deletedRows > 0;
-    }
-
-    public static boolean deleteEmployee(int id) throws SQLException {
-        Connection connection = DriverManager.getConnection(
-                "jdbc:mysql://localhost:3306/" + DATABASE,
-                "tour_admin",
-                PASSWORD
-        );
-        Statement statement = connection.createStatement();
-        int deletedRows = statement.executeUpdate(String.format("DELETE FROM employees WHERE id = %d", id));
-
-        return deletedRows > 0;
-    }
-
-    public static boolean deleteOrder(int id) throws SQLException {
-        Connection connection = DriverManager.getConnection(
-                "jdbc:mysql://localhost:3306/" + DATABASE,
-                "tour_admin",
-                PASSWORD
-        );
-        Statement statement = connection.createStatement();
-        int deletedRows = statement.executeUpdate(String.format("DELETE FROM orders WHERE id = %d", id));
-
-        return deletedRows > 0;
-    }
-
-    public static boolean deleteTransport(int id) throws SQLException {
-        Connection connection = DriverManager.getConnection(
-                "jdbc:mysql://localhost:3306/" + DATABASE,
-                "tour_admin",
-                PASSWORD
-        );
-        Statement statement = connection.createStatement();
-        int deletedRows = statement.executeUpdate(String.format("DELETE FROM transports WHERE id = %d", id));
+    public static boolean deleteTable(String table, int id) throws SQLException {
+        Statement statement = getStatement();
+        int deletedRows = statement.executeUpdate(String.format("DELETE FROM %s WHERE id = %d", table, id));
 
         return deletedRows > 0;
     }
