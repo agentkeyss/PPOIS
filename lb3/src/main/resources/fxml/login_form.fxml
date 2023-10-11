@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.paint.*?>
+<?import javafx.scene.text.*?>
+
+<FlowPane alignment="CENTER" columnHalignment="CENTER" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/17.0.2-ea" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.lb3.controllers.LoginController">
+   <children>
+      <VBox alignment="CENTER" prefHeight="190.0" prefWidth="283.0" spacing="5.0">
+         <children>
+            <Label text="SoftBerries">
+               <font>
+                  <Font name="Arial Bold" size="30.0" />
+               </font>
+               <textFill>
+                  <LinearGradient endX="1.0" endY="1.0">
+                     <stops>
+                        <Stop>
+                           <color>
+                              <Color red="0.5236647129058838" green="0.7684210538864136" blue="0.6338050961494446" />
+                           </color>
+                        </Stop>
+                        <Stop offset="1.0">
+                           <color>
+                              <Color red="0.11900000274181366" green="0.8500000238418579" blue="0.19210000336170197" />
+                           </color>
+                        </Stop>
+                     </stops>
+                  </LinearGradient>
+               </textFill>
+            </Label>
+            <TextField fx:id="email" prefHeight="40.0" prefWidth="364.0" promptText="Email">
+               <font>
+                  <Font name="System Bold" size="12.0" />
+               </font></TextField>
+            <PasswordField fx:id="password" prefHeight="40.0" prefWidth="274.0" promptText="Password">
+               <font>
+                  <Font name="System Bold" size="12.0" />
+               </font>
+            </PasswordField>
+            <HBox alignment="CENTER" prefHeight="40.0" prefWidth="267.0">
+               <children>
+                  <Button alignment="CENTER" contentDisplay="CENTER" mnemonicParsing="false" prefHeight="37.0" prefWidth="64.0" text="Войти"
+                  onAction="#loginProceed" fx:id="loginButton">
+                     <font>
+                        <Font name="System Bold" size="12.0" />
+                     </font>
+                  </Button>
+                  <Label text="  Нет аккаунта?" />
+                  <Hyperlink onAction="#openRegistrationPage" text="Регистрация" fx:id="registrationHyperLink"/>
+               </children>
+            </HBox>
+         </children></VBox>
+   </children>
+</FlowPane>

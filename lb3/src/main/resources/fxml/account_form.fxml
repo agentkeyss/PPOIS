@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.image.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.text.*?>
+
+<FlowPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/17.0.2-ea" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.lb3.controllers.AccountController">
+   <children>
+      <HBox alignment="CENTER_LEFT" prefHeight="94.0" prefWidth="600.0" spacing="205.0" style="-fx-background-color: lightgreen;">
+         <children>
+            <ImageView fitHeight="46.0" fitWidth="46.0" onMouseClicked="#openProductsForm" pickOnBounds="true" preserveRatio="true" fx:id="backImage">
+               <image>
+                  <Image url="@../images/back.png" />
+               </image>
+            </ImageView>
+            <VBox alignment="CENTER" prefHeight="94.0" prefWidth="101.0">
+               <children>
+                  <ImageView fitHeight="69.0" fitWidth="69.0" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@../images/user.png" />
+                     </image>
+                  </ImageView>
+                  <Label fx:id="usernameLabel" alignment="CENTER" prefHeight="22.0" prefWidth="57.0" text="User">
+                     <font>
+                        <Font name="System Bold" size="12.0" />
+                     </font>
+                  </Label>
+               </children>
+            </VBox>
+         </children>
+      </HBox>
+      <FlowPane alignment="CENTER" prefHeight="305.0" prefWidth="600.0">
+         <children>
+            <VBox alignment="TOP_CENTER" prefHeight="178.0" prefWidth="222.0" spacing="10.0">
+               <children>
+                  <Label text="Смена пароля">
+                     <font>
+                        <Font name="System Bold" size="15.0" />
+                     </font>
+                  </Label>
+                  <PasswordField promptText="Old password" fx:id="oldPassword">
+                     <font>
+                        <Font name="System Bold" size="12.0" />
+                     </font>
+                  </PasswordField>
+                  <PasswordField promptText="New password" fx:id="newPassword">
+                     <font>
+                        <Font name="System Bold" size="12.0" />
+                     </font>
+                  </PasswordField>
+                  <Button mnemonicParsing="false" text="Сменить" onAction="#changePassword" fx:id="changePasswordButton">
+                     <font>
+                        <Font name="System Bold" size="12.0" />
+                     </font>
+                  </Button>
+               </children>
+            </VBox>
+         </children>
+      </FlowPane>
+   </children>
+</FlowPane>
