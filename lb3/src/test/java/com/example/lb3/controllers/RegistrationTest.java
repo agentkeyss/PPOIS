@@ -87,7 +87,7 @@ class RegistrationTest extends ApplicationTest {
     }
 
     @Test
-    public void shortPasswordRegistration() {
+    public void shortPasswordRegistrationTest() {
         FxRobot robot = new FxRobot();
         robot.clickOn("#registrationHyperLink");
         robot.clickOn("#username");
@@ -103,7 +103,7 @@ class RegistrationTest extends ApplicationTest {
     }
 
     @Test
-    public void invalidEmailRegistration() {
+    public void invalidEmailRegistrationTest() {
         FxRobot robot = new FxRobot();
         robot.clickOn("#registrationHyperLink");
         robot.clickOn("#username");

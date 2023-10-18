@@ -1,17 +1,14 @@
 package com.example.lb3.controllers;
 
 import com.example.lb3.Database;
-import com.example.lb3.ProductType;
 import com.example.lb3.ShopApplication;
 import com.example.lb3.models.Account;
-import com.example.lb3.models.Product;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.MouseButton;
 import javafx.stage.Stage;
 import org.junit.FixMethodOrder;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.Order;
 import org.junit.jupiter.api.Test;
 import org.testfx.api.FxAssert;
 import org.testfx.api.FxRobot;

@@ -1,10 +1,9 @@
 package com.example.lb3.controllers;
 
 import com.example.lb3.Database;
-import com.example.lb3.ProductType;
+import com.example.lb3.AccessoryType;
 import com.example.lb3.ShopApplication;
-import com.example.lb3.models.Product;
-import javafx.beans.property.SimpleStringProperty;
+import com.example.lb3.models.*;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
@@ -29,7 +28,7 @@ import java.util.ResourceBundle;
 
 public class AddingController implements Initializable {
     @FXML
-    public ComboBox<ProductType> typesComboBox;
+    public ComboBox<String> typesComboBox;
     @FXML
     public TextField productPrice;
     @FXML
@@ -41,7 +40,7 @@ public class AddingController implements Initializable {
     public void initialize(URL url, ResourceBundle resourceBundle) {
         usernameLabel.setText(ShopApplication.getCurrentAccount().getUsername());
 
-        ObservableList<ProductType> types = FXCollections.observableArrayList(Arrays.asList(ProductType.values()));
+        ObservableList<String> types = FXCollections.observableArrayList(List.of("Accessory", "Computer", "TV", "Tablet", "Smartphone"));
         typesComboBox.setItems(types);
     }
 
@@ -65,7 +64,35 @@ public class AddingController implements Initializable {
     @FXML
     public boolean addingProceed(ActionEvent actionEvent){
         try {
-            Product product = new Product(productName.getText(), Double.parseDouble(productPrice.getText()), typesComboBox.getValue());
+            Product product = null;
+
+            // Здесь switch
+            switch(typesComboBox.getValue()) {
+                case "Accessory": {
+                    product = new Accessory(productName.getText(), Double.parseDouble(productPrice.getText()),
+                            null, null);
+                    break;
+                }
+                case "Computer": {
+                    product = new Computer(productName.getText(), Double.parseDouble(productPrice.getText()),
+                            null, -1, -1, null);
+                    break;
+                }
+                case "Smartphone": {
+                    product = new Smartphone(productName.getText(), Double.parseDouble(productPrice.getText()), -1, -1, -1, -1,
+                            null);
+                    break;
+                }
+                case "Tablet": {
+                    product = new Tablet(productName.getText(), Double.parseDouble(productPrice.getText()), -1, -1, -1, -1,
+                            null);
+                    break;
+                }
+                case "TV": {
+                    product = new TV(productName.getText(), Double.parseDouble(productPrice.getText()), -1);
+                }
+            }
+            assert product != null;
             Database.addProduct(product);
             productName.clear();
             productPrice.clear();

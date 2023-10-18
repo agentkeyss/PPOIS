@@ -1,16 +1,14 @@
 package com.example.lb3.models;
 
-import com.example.lb3.ProductType;
+import com.example.lb3.AccessoryType;
 
 public class Product {
     private String name;
     private double price;
-    private ProductType productType;
 
-    public Product(String name, double price, ProductType productType) {
+    public Product(String name, double price) {
         this.name = name;
         this.price = price;
-        this.productType = productType;
     }
 
     public String getName() {
@@ -21,7 +19,4 @@ public class Product {
         return price;
     }
 
-    public ProductType getProductType() {
-        return productType;
-    }
 }

@@ -42,7 +42,7 @@ public class ProductsController implements Initializable {
 
         nameColumn.setCellValueFactory(new PropertyValueFactory<>("name"));
         priceColumn.setCellValueFactory(new PropertyValueFactory<>("price"));
-        typeColumn.setCellValueFactory(cellData -> new SimpleStringProperty(cellData.getValue().getProductType().toString()));
+        typeColumn.setCellValueFactory(cellData -> new SimpleStringProperty(cellData.getValue().getClass().getSimpleName()));
 
         ObservableList<Product> products = null;
         try {
@@ -52,6 +52,10 @@ public class ProductsController implements Initializable {
             throw new RuntimeException(e);
         }
 
+    }
+
+    private static String getProductTypeByClass(Product product) {
+        return product.getClass().getSimpleName();
     }
 
     private void updateTable() {

@@ -1,6 +1,8 @@
 package com.example.lb3;
 
+import com.example.lb3.models.Accessory;
 import com.example.lb3.models.Account;
+import com.example.lb3.models.Computer;
 import com.example.lb3.models.Product;
 import org.apache.commons.codec.digest.DigestUtils;
 
@@ -21,9 +23,34 @@ public class Database {
 
             statement.executeUpdate("CREATE TABLE IF NOT EXISTS products(id INT PRIMARY KEY AUTO_INCREMENT," +
                     "name VARCHAR(50), price FLOAT, product_type VARCHAR(50), customer_id INT, FOREIGN KEY (customer_id) REFERENCES accounts (id))");
-
         }
     }
+
+    private static String getProductTypeByClass(Product product) {
+        return product.getClass().getSimpleName();
+    }
+
+//    private static String getInsertStatementByClass(Product product) {
+//        switch (product.getClass().getName()) {
+//            case "Accessory" -> {
+//                return String.format("INSERT INTO accessories(name, price, accessory_type, color)" +
+//                        "VALUES('%s', '%s', '%s', '%s')", product.getName(), product.getPrice(), ((Accessory)product).getAccessoryType(), ((Accessory) product).getColor());
+//            }
+//            case "Computer" -> {
+//                return String.format("INSERT INTO computers(name, price, video_card, core_count, display_permission, processor)" +
+//                        "VALUES('%s', '%s', '%s', '%s', '%s', '%s')", product.getName(), product.getPrice(), ((Computer)product).getVideoCard(), ((Computer)product).getCoreCount(),
+//                        ((Computer)product).getDisplayPermission(), ((Computer)product).getProcessor());
+//            }
+//            case "Smartphone" -> {
+//                return "smartphones";
+//            }
+//            case "Tablet" -> {
+//                return "tablets";
+//            }
+//        }
+//
+//        return "TVs";
+//    }
 
     public static void addAccount(Account user) throws SQLException {
         try(Connection connection = DriverManager.getConnection("jdbc:mysql://localhost:3306/" + DATABASE,
@@ -40,7 +67,7 @@ public class Database {
                 USER, PASSWORD)) {
             Statement statement = connection.createStatement();
             statement.executeUpdate(String.format("INSERT INTO products(name, price, product_type) " +
-                            "VALUES('%s', '%s', '%s')", product.getName(), product.getPrice(), product.getProductType()));
+                            "VALUES('%s', '%s', '%s')", product.getName(), product.getPrice(), getProductTypeByClass(product)));
         }
     }
 
@@ -105,8 +132,7 @@ public class Database {
             Statement statement = connection.createStatement();
             ResultSet productsSet = statement.executeQuery("SELECT * FROM products WHERE customer_id is NULL");
             while (productsSet.next()) {
-                products.add(new Product(productsSet.getString("name"), productsSet.getDouble("price"),
-                        ProductType.valueOf(productsSet.getString("product_type"))));
+                products.add(new Product(productsSet.getString("name"), productsSet.getDouble("price")));
             }
         }
 
@@ -120,8 +146,7 @@ public class Database {
             Statement statement = connection.createStatement();
             ResultSet productsSet = statement.executeQuery(String.format("SELECT * FROM products WHERE customer_id = %d", userID));
             while (productsSet.next()) {
-                products.add(new Product(productsSet.getString("name"), productsSet.getDouble("price"),
-                        ProductType.valueOf(productsSet.getString("product_type"))));
+                products.add(new Product(productsSet.getString("name"), productsSet.getDouble("price")));
             }
         }
 

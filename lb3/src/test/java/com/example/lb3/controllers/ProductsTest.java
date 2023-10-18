@@ -1,16 +1,14 @@
 package com.example.lb3.controllers;
 
 import com.example.lb3.Database;
-import com.example.lb3.ProductType;
+import com.example.lb3.AccessoryType;
 import com.example.lb3.ShopApplication;
-import com.example.lb3.models.Account;
-import com.example.lb3.models.Product;
+import com.example.lb3.models.*;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.MouseButton;
 import javafx.stage.Stage;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 import org.testfx.api.FxAssert;
 import org.testfx.api.FxRobot;
@@ -19,11 +17,16 @@ import org.testfx.framework.junit.ApplicationTest;
 import org.testfx.matcher.base.NodeMatchers;
 
 import java.sql.SQLException;
+import java.util.List;
 import java.util.concurrent.TimeoutException;
 
 public class ProductsTest extends ApplicationTest {
     private final Account testAccount = new Account("test", "test@gmail.com", "test1234", false);
-    private final Product testProduct = new Product("iMac", 2000, ProductType.COMPUTER);
+    private final List<Product> testProducts = List.of(new TV("Samsung", 2000, 10),
+            new Smartphone("iPhone", 2000, 13, 4, 5000, 5, "A15 Bionic"),
+            new Tablet("iPad", 3000, 13, 8, 7000, 7, "A15 Bionic"),
+            new Computer("iMac", 5000, "PCIe", 4, 10, "Intel Core 8"),
+            new Accessory("AppleWatch", 300, AccessoryType.SMARTWATCH, "Black"));
 
     @Override
     public void start(Stage stage) throws Exception {
@@ -64,14 +67,20 @@ public class ProductsTest extends ApplicationTest {
 
     @Test
     public void addToCartTest() throws SQLException {
-        Database.addProduct(testProduct);
+        for (Product product : testProducts){
+            Database.addProduct(product);
+        }
         FxRobot robot = new FxRobot();
         loginAsTestAccount(robot);
-        clickOn(testProduct.getName());
-        clickOn("#addToCartButton");
+        for (Product product : testProducts){
+            clickOn(product.getName());
+            clickOn("#addToCartButton");
+        }
         clickOn("#cartImage");
 
-        FxAssert.verifyThat("iMac", NodeMatchers.isVisible());
+        for (Product product : testProducts){
+            FxAssert.verifyThat(product.getName(), NodeMatchers.isVisible());
+        }
     }
 
     @Test
@@ -93,7 +102,7 @@ public class ProductsTest extends ApplicationTest {
     }
 
     @Test
-    public void openLoginForm() {
+    public void openLoginFormTest() {
         FxRobot robot = new FxRobot();
         loginAsTestAccount(robot);
         clickOn("#exitButton");

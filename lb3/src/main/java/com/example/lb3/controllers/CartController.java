@@ -44,10 +44,14 @@ public class CartController implements Initializable {
 
         nameColumn.setCellValueFactory(new PropertyValueFactory<>("name"));
         priceColumn.setCellValueFactory(new PropertyValueFactory<>("price"));
-        typeColumn.setCellValueFactory(cellData -> new SimpleStringProperty(cellData.getValue().getProductType().toString()));
+        typeColumn.setCellValueFactory(cellData -> new SimpleStringProperty(cellData.getValue().getClass().getSimpleName()));
 
         ObservableList<Product> products = FXCollections.observableArrayList(ShopApplication.getCartProducts());
         productsTable.setItems(products);
+    }
+
+    private static String getProductTypeByClass(Product product) {
+        return product.getClass().getSimpleName();
     }
 
     @FXML
