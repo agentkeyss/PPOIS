@@ -1,6 +1,4 @@
-import org.example.Edge;
-import org.example.Graph;
-import org.example.HeaderNode;
+import org.example.*;
 import org.junit.Assert;
 import org.junit.Test;
 
@@ -9,23 +7,21 @@ import java.util.ListIterator;
 
 public class OperationsTest {
     @Test
-    public void addingNodeTest() {
+    public void addingNodeTest()  throws NullNodeException {
         Graph<Integer> graph = new Graph<>();
         graph.addNode(new HeaderNode<>(1));
 
         Assert.assertTrue(graph.isNodeInGraph(1));
     }
 
-    @Test
-    public void addingNullNodeTest() {
+    @Test(expected = NullNodeException.class)
+    public void addingNullNodeTest() throws NullNodeException {
         Graph<Integer> graph = new Graph<>();
         graph.addNode(null);
-
-        Assert.assertTrue(graph.isEmpty());
     }
 
     @Test
-    public void addingEdgeTest() {
+    public void addingEdgeTest() throws NullNodeException, NullEdgeException {
         Graph<Integer> graph = new Graph<>();
 
         HeaderNode<Integer> node1 = new HeaderNode<>(1);
@@ -39,7 +35,7 @@ public class OperationsTest {
     }
 
     @Test
-    public void addingNullEdgeTest() {
+    public void addingNullEdgeTest() throws NullNodeException, NullEdgeException{
         Graph<Integer> graph = new Graph<>();
 
         HeaderNode<Integer> node1 = new HeaderNode<>(1);
@@ -59,7 +55,7 @@ public class OperationsTest {
     }
 
     @Test
-    public void clearTest(){
+    public void clearTest() throws NullNodeException{
         Graph<Integer> graph = new Graph<>();
         graph.addNode(new HeaderNode<>(1));
         graph.addNode(new HeaderNode<>(5));
@@ -68,7 +64,7 @@ public class OperationsTest {
     }
 
     @Test
-    public void gettingNodeTest() {
+    public void gettingNodeTest() throws NullNodeException{
         Graph<Integer> graph = new Graph<>();
         HeaderNode<Integer> node = new HeaderNode<>(5);
         graph.addNode(node);
@@ -77,7 +73,7 @@ public class OperationsTest {
     }
 
     @Test
-    public void isNodeInGraphTest() {
+    public void isNodeInGraphTest() throws NullNodeException{
         Graph<Integer> graph = new Graph<>();
         graph.addNode(new HeaderNode<>(5));
 
@@ -85,7 +81,7 @@ public class OperationsTest {
     }
 
     @Test
-    public void isEdgeInGraphTest() {
+    public void isEdgeInGraphTest() throws NullNodeException, NullEdgeException{
         Graph<Integer> graph = new Graph<>();
         graph.addNode(new HeaderNode<>(1));
         graph.addNode(new HeaderNode<>(5));
@@ -95,7 +91,7 @@ public class OperationsTest {
     }
 
     @Test
-    public void gettingNodesCountTest() {
+    public void gettingNodesCountTest() throws NullNodeException{
         Graph<Integer> graph = new Graph<>();
         graph.addNode(new HeaderNode<>(1));
         graph.addNode(new HeaderNode<>(2));
@@ -108,7 +104,7 @@ public class OperationsTest {
     }
 
     @Test
-    public void gettingEdgesCountTest() {
+    public void gettingEdgesCountTest() throws NullNodeException, NullEdgeException{
         Graph<Integer> graph = new Graph<>();
         graph.addNode(new HeaderNode<>(1));
         graph.addNode(new HeaderNode<>(2));
@@ -125,7 +121,7 @@ public class OperationsTest {
     }
 
     @Test
-    public void gettingNodeDegreeTest() {
+    public void gettingNodeDegreeTest() throws NullNodeException, NullEdgeException {
         Graph<Integer> graph = new Graph<>();
         graph.addNode(new HeaderNode<>(1));
         graph.addNode(new HeaderNode<>(2));
@@ -145,7 +141,7 @@ public class OperationsTest {
     }
 
     @Test
-    public void deletingNodeTest() {
+    public void deletingNodeTest() throws NullNodeException, NullEdgeException{
         Graph<Integer> graph = new Graph<>();
         graph.addNode(new HeaderNode<>(1));
         graph.addNode(new HeaderNode<>(2));
@@ -166,7 +162,7 @@ public class OperationsTest {
     }
 
     @Test
-    public void deletingEdgeTest() {
+    public void deletingEdgeTest() throws NullNodeException, NullEdgeException{
         Graph<Integer> graph = new Graph<>();
         graph.addNode(new HeaderNode<>(1));
         graph.addNode(new HeaderNode<>(2));
@@ -187,7 +183,7 @@ public class OperationsTest {
     }
 
     @Test
-    public void gettingAllEdgesTest() {
+    public void gettingAllEdgesTest() throws NullNodeException, NullEdgeException{
         Graph<Integer> graph = new Graph<>();
         graph.addNode(new HeaderNode<>(1));
         graph.addNode(new HeaderNode<>(2));
@@ -206,7 +202,7 @@ public class OperationsTest {
     }
 
     @Test
-    public void gettingIncidentalEdges() {
+    public void gettingIncidentalEdges() throws NullNodeException, NullEdgeException{
         Graph<Integer> graph = new Graph<>();
         graph.addNode(new HeaderNode<>(1));
         graph.addNode(new HeaderNode<>(2));
@@ -225,7 +221,7 @@ public class OperationsTest {
     }
 
     @Test
-    public void nodeIteratorTest() {
+    public void nodeIteratorTest() throws NullNodeException{
         Graph<Integer> graph = new Graph<>();
 
         HeaderNode<Integer> node1 = new HeaderNode<>(1);
@@ -246,7 +242,7 @@ public class OperationsTest {
     }
 
     @Test
-    public void adjacentNodeIteratorTest() {
+    public void adjacentNodeIteratorTest() throws NullNodeException, NullEdgeException{
         Graph<Integer> graph = new Graph<>();
 
         HeaderNode<Integer> node1 = new HeaderNode<>(1);
@@ -272,7 +268,7 @@ public class OperationsTest {
     }
 
     @Test
-    public void edgeIteratorTest() {
+    public void edgeIteratorTest() throws NullNodeException, NullEdgeException{
         Graph<Integer> graph = new Graph<>();
 
         HeaderNode<Integer> node1 = new HeaderNode<>(1);
@@ -300,7 +296,7 @@ public class OperationsTest {
     }
 
     @Test
-    public void incidentalEdgeIteratorTest() {
+    public void incidentalEdgeIteratorTest() throws NullNodeException, NullEdgeException{
         Graph<Integer> graph = new Graph<>();
 
         HeaderNode<Integer> node1 = new HeaderNode<>(1);
@@ -323,5 +319,125 @@ public class OperationsTest {
         Assert.assertEquals(new Edge<>(node1, node4), iterator.next());
         Assert.assertEquals(new Edge<>(node1, node3), iterator.next());
         Assert.assertEquals(new Edge<>(node1, node2), iterator.next());
+    }
+
+    @Test
+    public void nodeConstantIteratorTest() throws NullNodeException{
+        Graph<Integer> graph = new Graph<>();
+
+        HeaderNode<Integer> node1 = new HeaderNode<>(1);
+        HeaderNode<Integer> node2 = new HeaderNode<>(2);
+        HeaderNode<Integer> node3 = new HeaderNode<>(3);
+        HeaderNode<Integer> node4 = new HeaderNode<>(4);
+
+        graph.addNode(node1);
+        graph.addNode(node2);
+        graph.addNode(node3);
+        graph.addNode(node4);
+
+        ConstantIterator<HeaderNode<Integer>> iterator = graph.getConstantNodeIterator();
+        Assert.assertEquals(node1, iterator.next());
+        Assert.assertEquals(node2, iterator.next());
+        Assert.assertEquals(node3, iterator.next());
+        Assert.assertEquals(node4, iterator.next());
+    }
+
+    @Test
+    public void adjacentNodeConstantIteratorTest() throws NullNodeException, NullEdgeException{
+        Graph<Integer> graph = new Graph<>();
+
+        HeaderNode<Integer> node1 = new HeaderNode<>(1);
+        HeaderNode<Integer> node2 = new HeaderNode<>(2);
+        HeaderNode<Integer> node3 = new HeaderNode<>(3);
+        HeaderNode<Integer> node4 = new HeaderNode<>(4);
+
+        graph.addNode(node1);
+        graph.addNode(node2);
+        graph.addNode(node3);
+        graph.addNode(node4);
+
+        graph.addEdge(new Edge<>(node1, node4));
+        graph.addEdge(new Edge<>(node1, node3));
+        graph.addEdge(new Edge<>(node1, node2));
+        graph.addEdge(new Edge<>(node2, node1));
+        graph.addEdge(new Edge<>(node3, node2));
+
+        ConstantIterator<HeaderNode<Integer>> iterator = graph.getConstantAdjacentNodesIterator(node1);
+        Assert.assertEquals(node4, iterator.next());
+        Assert.assertEquals(node3, iterator.next());
+        Assert.assertEquals(node2, iterator.next());
+    }
+
+    @Test
+    public void edgeConstantIteratorTest() throws NullNodeException, NullEdgeException{
+        Graph<Integer> graph = new Graph<>();
+
+        HeaderNode<Integer> node1 = new HeaderNode<>(1);
+        HeaderNode<Integer> node2 = new HeaderNode<>(2);
+        HeaderNode<Integer> node3 = new HeaderNode<>(3);
+        HeaderNode<Integer> node4 = new HeaderNode<>(4);
+
+        graph.addNode(node1);
+        graph.addNode(node2);
+        graph.addNode(node3);
+        graph.addNode(node4);
+
+        graph.addEdge(new Edge<>(node1, node4));
+        graph.addEdge(new Edge<>(node1, node3));
+        graph.addEdge(new Edge<>(node1, node2));
+        graph.addEdge(new Edge<>(node2, node1));
+        graph.addEdge(new Edge<>(node3, node2));
+
+        ConstantIterator<Edge<Integer>> iterator = graph.getConstantEdgeIterator();
+        Assert.assertEquals(new Edge<>(node1, node4), iterator.next());
+        Assert.assertEquals(new Edge<>(node1, node3), iterator.next());
+        Assert.assertEquals(new Edge<>(node1, node2), iterator.next());
+        Assert.assertEquals(new Edge<>(node2, node1), iterator.next());
+        Assert.assertEquals(new Edge<>(node3, node2), iterator.next());
+    }
+
+    @Test
+    public void incidentalEdgeConstantIteratorTest() throws NullNodeException, NullEdgeException{
+        Graph<Integer> graph = new Graph<>();
+
+        HeaderNode<Integer> node1 = new HeaderNode<>(1);
+        HeaderNode<Integer> node2 = new HeaderNode<>(2);
+        HeaderNode<Integer> node3 = new HeaderNode<>(3);
+        HeaderNode<Integer> node4 = new HeaderNode<>(4);
+
+        graph.addNode(node1);
+        graph.addNode(node2);
+        graph.addNode(node3);
+        graph.addNode(node4);
+
+        graph.addEdge(new Edge<>(node1, node4));
+        graph.addEdge(new Edge<>(node1, node3));
+        graph.addEdge(new Edge<>(node1, node2));
+        graph.addEdge(new Edge<>(node2, node1));
+        graph.addEdge(new Edge<>(node3, node2));
+
+        ConstantIterator<Edge<Integer>> iterator = graph.getConstantIncidentalEdgesIterator(node1);
+        Assert.assertEquals(new Edge<>(node1, node4), iterator.next());
+        Assert.assertEquals(new Edge<>(node1, node3), iterator.next());
+        Assert.assertEquals(new Edge<>(node1, node2), iterator.next());
+    }
+
+    @Test
+    public void forEachTest() throws NullNodeException{
+        Graph<Integer> graph = new Graph<>();
+
+        HeaderNode<Integer> node1 = new HeaderNode<>(1);
+        HeaderNode<Integer> node2 = new HeaderNode<>(2);
+        HeaderNode<Integer> node3 = new HeaderNode<>(3);
+        HeaderNode<Integer> node4 = new HeaderNode<>(4);
+
+        graph.addNode(node1);
+        graph.addNode(node2);
+        graph.addNode(node3);
+        graph.addNode(node4);
+
+        for (HeaderNode<Integer> node : graph) {
+            Assert.assertTrue(graph.isNodeInGraph(node.getInfo()));
+        }
     }
 }

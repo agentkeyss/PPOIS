@@ -3,8 +3,8 @@ package org.example;
 import java.util.Objects;
 
 public class Edge<T> {
-    private HeaderNode<T> startNode;
-    private HeaderNode<T> finishNode;
+    private final HeaderNode<T> startNode;
+    private final HeaderNode<T> finishNode;
 
     public Edge(HeaderNode<T> startNode, HeaderNode<T> finishNode) {
         this.startNode = startNode;
@@ -15,16 +15,8 @@ public class Edge<T> {
         return startNode;
     }
 
-    public void setStartNode(HeaderNode<T> startNode) {
-        this.startNode = startNode;
-    }
-
     public HeaderNode<T> getFinishNode() {
         return finishNode;
-    }
-
-    public void setFinishNode(HeaderNode<T> finishNode) {
-        this.finishNode = finishNode;
     }
 
     @Override

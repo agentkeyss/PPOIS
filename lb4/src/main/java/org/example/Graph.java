@@ -2,18 +2,21 @@ package org.example;
 
 import java.util.*;
 
-public class Graph<T> {
+public class Graph<T> implements Iterable<HeaderNode<T>>{
     private final List<Edge<T>> edgeList;
     private final List<HeaderNode<T>> nodeList;
 
     public Graph() {
-        nodeList = new LinkedList<>();
-        edgeList = new LinkedList<>();
+        this(new LinkedList<>(), new LinkedList<>());
     }
 
     public Graph(Graph<T> graph) {
-        nodeList = new LinkedList<>(graph.getNodeList());
-        edgeList = new LinkedList<>(graph.getEdgeList());
+        this(graph.nodeList, graph.edgeList);
+    }
+
+    private Graph(List<HeaderNode<T>> nodeList, List<Edge<T>> edgeList) {
+        this.nodeList = nodeList;
+        this.edgeList = edgeList;
     }
 
     public List<HeaderNode<T>> getNodeList() {
@@ -24,12 +27,14 @@ public class Graph<T> {
         return new LinkedList<>(edgeList);
     }
 
-    public void addNode(HeaderNode<T> node) {
-        if (node == null) return;
+    public void addNode(HeaderNode<T> node) throws NullNodeException {
+        if (node == null) throw new NullNodeException();
         nodeList.add(node);
     }
 
-    public void addEdge(Edge<T> edge) {
+    public void addEdge(Edge<T> edge) throws NullEdgeException {
+        if (edge == null) throw new NullEdgeException();
+
         if (edge.getStartNode() == null || edge.getFinishNode() == null || !nodeList.contains(edge.getStartNode()) ||
                 !nodeList.contains(edge.getFinishNode())) return;
 
@@ -44,6 +49,7 @@ public class Graph<T> {
 
     public void clear() {
         this.nodeList.clear();
+        this.edgeList.clear();
     }
 
     public List<HeaderNode<T>> getNodesByInfo(T info) {
@@ -60,8 +66,8 @@ public class Graph<T> {
         return !getNodesByInfo(info).isEmpty();
     }
 
-    public boolean isEdgeInGraph(Edge<T> edge) {
-        if (edge == null) return false;
+    public boolean isEdgeInGraph(Edge<T> edge) throws NullEdgeException {
+        if (edge == null) throw new NullEdgeException();
 
         return edgeList.contains(edge);
     }
@@ -74,14 +80,14 @@ public class Graph<T> {
         return edgeList.size();
     }
 
-    public int getNodeDegree(HeaderNode<T> node) {
-        if (node == null) return -1;
+    public int getNodeDegree(HeaderNode<T> node) throws NullNodeException {
+        if (node == null) throw new NullNodeException();
 
         return node.getTrail().size() + node.getCount();
     }
 
-    public void deleteNode(HeaderNode<T> node) {
-        if (node == null) return;
+    public void deleteNode(HeaderNode<T> node) throws NullNodeException {
+        if (node == null) throw new NullNodeException();
         List<Edge<T>> newEdgeList = new LinkedList<>(edgeList);
 
         for (Edge<T> edge : newEdgeList) {
@@ -96,17 +102,17 @@ public class Graph<T> {
         nodeList.remove(node);
     }
 
-    public void deleteEdge(Edge<T> edge) {
-        if (edge == null) return;
+    public void deleteEdge(Edge<T> edge) throws NullEdgeException {
+        if (edge == null) throw new NullEdgeException();
 
         this.edgeList.remove(edge);
         edge.getFinishNode().setCount(edge.getFinishNode().getCount() - 1);
         edge.getStartNode().getTrail().remove(edge.getFinishNode());
     }
 
-    public List<Edge<T>> getIncidentalEdges(HeaderNode<T> node) {
+    public List<Edge<T>> getIncidentalEdges(HeaderNode<T> node) throws NullNodeException {
+        if (node == null) throw new NullNodeException();
         List<Edge<T>> edges = new LinkedList<>();
-        if (node == null) return edges;
 
         for (Edge<T> edge : this.edgeList) {
             if (edge.getStartNode().equals(node)) {
@@ -122,18 +128,43 @@ public class Graph<T> {
     }
 
     public ListIterator<Edge<T>> getEdgeIterator() {
-        return getEdgeList().listIterator();
+        return edgeList.listIterator();
     }
 
-    public ListIterator<Edge<T>> getIncidentalEdgesIterator(HeaderNode<T> node) {
-        if (node == null) return null;
+    public ListIterator<Edge<T>> getIncidentalEdgesIterator(HeaderNode<T> node) throws NullNodeException {
+        if (node == null) throw new NullNodeException();
 
         return getIncidentalEdges(node).listIterator();
     }
 
-    public ListIterator<HeaderNode<T>> getAdjacentNodesIterator(HeaderNode<T> node) {
-        if (node == null) return null;
+    public ListIterator<HeaderNode<T>> getAdjacentNodesIterator(HeaderNode<T> node) throws NullNodeException {
+        if (node == null) throw new NullNodeException();
 
         return node.getTrail().listIterator();
+    }
+
+    public ConstantIterator<HeaderNode<T>> getConstantNodeIterator() {
+        return new ConstantIterator<>(nodeList);
+    }
+
+    public ConstantIterator<Edge<T>> getConstantEdgeIterator() {
+        return new ConstantIterator<>(edgeList);
+    }
+
+    public ConstantIterator<Edge<T>> getConstantIncidentalEdgesIterator(HeaderNode<T> node) throws NullNodeException {
+        if (node == null) throw new NullNodeException();
+
+        return new ConstantIterator<>(getIncidentalEdges(node));
+    }
+
+    public ConstantIterator<HeaderNode<T>> getConstantAdjacentNodesIterator(HeaderNode<T> node) throws NullNodeException {
+        if (node == null) throw new NullNodeException();
+
+        return new ConstantIterator<>(node.getTrail());
+    }
+
+    @Override
+    public Iterator<HeaderNode<T>> iterator() {
+        return nodeList.iterator();
     }
 }

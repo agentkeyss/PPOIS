@@ -1,11 +1,12 @@
 package org.example;
 
+import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Objects;
 
 public class HeaderNode<T> {
-    private T info;
+    private final T info;
     private int count;
     private final List<HeaderNode<T>> trail;
 
@@ -17,10 +18,6 @@ public class HeaderNode<T> {
 
     public T getInfo() {
         return info;
-    }
-
-    public void setInfo(T info) {
-        this.info = info;
     }
 
     public int getCount() {
