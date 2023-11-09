@@ -6,12 +6,22 @@ import java.util.List;
 import java.util.ListIterator;
 
 public class OperationsTest {
+
     @Test
     public void addingNodeTest()  throws NullNodeException {
         Graph<Integer> graph = new Graph<>();
         graph.addNode(new HeaderNode<>(1));
 
         Assert.assertTrue(graph.isNodeInGraph(1));
+    }
+
+    @Test
+    public void addingSimilarNodeTest()  throws NullNodeException {
+        Graph<Integer> graph = new Graph<>();
+        graph.addNode(new HeaderNode<>(1));
+        graph.addNode(new HeaderNode<>(1));
+
+        Assert.assertEquals(1, graph.getNodesCount());
     }
 
     @Test(expected = NullNodeException.class)

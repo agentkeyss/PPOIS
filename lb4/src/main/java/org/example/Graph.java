@@ -19,16 +19,13 @@ public class Graph<T> implements Iterable<HeaderNode<T>>{
         this.edgeList = edgeList;
     }
 
-    public List<HeaderNode<T>> getNodeList() {
-        return new LinkedList<>(nodeList);
-    }
-
     public List<Edge<T>> getEdgeList() {
         return new LinkedList<>(edgeList);
     }
 
     public void addNode(HeaderNode<T> node) throws NullNodeException {
         if (node == null) throw new NullNodeException();
+        if (this.nodeList.contains(node)) return;
         nodeList.add(node);
     }
 
@@ -82,6 +79,7 @@ public class Graph<T> implements Iterable<HeaderNode<T>>{
 
     public int getNodeDegree(HeaderNode<T> node) throws NullNodeException {
         if (node == null) throw new NullNodeException();
+        if (!this.nodeList.contains(node)) return -1;
 
         return node.getTrail().size() + node.getCount();
     }
@@ -98,12 +96,15 @@ public class Graph<T> implements Iterable<HeaderNode<T>>{
                 edge.getFinishNode().setCount(edge.getFinishNode().getCount() - 1);
             }
         }
+        node.setCount(0);
+        node.clearTrail();
 
         nodeList.remove(node);
     }
 
     public void deleteEdge(Edge<T> edge) throws NullEdgeException {
         if (edge == null) throw new NullEdgeException();
+        if (!this.edgeList.contains(edge)) return;
 
         this.edgeList.remove(edge);
         edge.getFinishNode().setCount(edge.getFinishNode().getCount() - 1);
@@ -166,5 +167,18 @@ public class Graph<T> implements Iterable<HeaderNode<T>>{
     @Override
     public Iterator<HeaderNode<T>> iterator() {
         return nodeList.iterator();
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Graph<?> graph = (Graph<?>) o;
+        return Objects.equals(new HashSet<>(edgeList), new HashSet<>(graph.edgeList)) && Objects.equals(new HashSet<>(nodeList), new HashSet<>(graph.nodeList));
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(new HashSet<>(edgeList), new HashSet<>(nodeList));
     }
 }

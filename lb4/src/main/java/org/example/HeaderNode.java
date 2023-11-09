@@ -36,6 +36,8 @@ public class HeaderNode<T> {
         this.trail.add(node);
     }
 
+    public void clearTrail() {this.trail.clear();}
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
