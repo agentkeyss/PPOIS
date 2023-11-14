@@ -23,10 +23,9 @@ public class Graph<T> implements Iterable<HeaderNode<T>>{
         return new LinkedList<>(edgeList);
     }
 
-    public void addNode(HeaderNode<T> node) throws NullNodeException {
-        if (node == null) throw new NullNodeException();
-        if (this.nodeList.contains(node)) return;
-        nodeList.add(node);
+    public void addNode(T info){
+        if (this.nodeList.contains(new HeaderNode<>(info))) return;
+        nodeList.add(new HeaderNode<>(info));
     }
 
     public void addEdge(Edge<T> edge) throws NullEdgeException {
@@ -77,25 +76,28 @@ public class Graph<T> implements Iterable<HeaderNode<T>>{
         return edgeList.size();
     }
 
-    public int getNodeDegree(HeaderNode<T> node) throws NullNodeException {
+    public int getNodeDegree(HeaderNode<T> node) throws NullNodeException, NodeNotFoundException {
         if (node == null) throw new NullNodeException();
-        if (!this.nodeList.contains(node)) return -1;
+        if (!this.nodeList.contains(node)) throw new NodeNotFoundException();
 
         return node.getTrail().size() + node.getCount();
     }
 
     public void deleteNode(HeaderNode<T> node) throws NullNodeException {
         if (node == null) throw new NullNodeException();
-        List<Edge<T>> newEdgeList = new LinkedList<>(edgeList);
+        ListIterator<Edge<T>> edgeListIterator = edgeList.listIterator();
 
-        for (Edge<T> edge : newEdgeList) {
-            if (edge.getFinishNode().equals(node)) {
-                this.edgeList.remove(edge);
-            } else if (edge.getStartNode().equals(node)) {
-                this.edgeList.remove(edge);
-                edge.getFinishNode().setCount(edge.getFinishNode().getCount() - 1);
+        while(edgeListIterator.hasNext()) {
+            Edge<T> currentEdge = edgeListIterator.next();
+
+            if (currentEdge.getFinishNode().equals(node)) {
+                edgeListIterator.remove();
+            } else if (currentEdge.getStartNode().equals(node)) {
+                edgeListIterator.remove();
+                currentEdge.getFinishNode().setCount(currentEdge.getFinishNode().getCount() - 1);
             }
         }
+
         node.setCount(0);
         node.clearTrail();
 

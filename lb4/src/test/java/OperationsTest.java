@@ -10,7 +10,7 @@ public class OperationsTest {
     @Test
     public void addingNodeTest()  throws NullNodeException {
         Graph<Integer> graph = new Graph<>();
-        graph.addNode(new HeaderNode<>(1));
+        graph.addNode(1);
 
         Assert.assertTrue(graph.isNodeInGraph(1));
     }
@@ -18,16 +18,10 @@ public class OperationsTest {
     @Test
     public void addingSimilarNodeTest()  throws NullNodeException {
         Graph<Integer> graph = new Graph<>();
-        graph.addNode(new HeaderNode<>(1));
-        graph.addNode(new HeaderNode<>(1));
+        graph.addNode(1);
+        graph.addNode(1);
 
         Assert.assertEquals(1, graph.getNodesCount());
-    }
-
-    @Test(expected = NullNodeException.class)
-    public void addingNullNodeTest() throws NullNodeException {
-        Graph<Integer> graph = new Graph<>();
-        graph.addNode(null);
     }
 
     @Test
@@ -37,8 +31,8 @@ public class OperationsTest {
         HeaderNode<Integer> node1 = new HeaderNode<>(1);
         HeaderNode<Integer> node2 = new HeaderNode<>(5);
 
-        graph.addNode(node1);
-        graph.addNode(node2);
+        graph.addNode(1);
+        graph.addNode(5);
         graph.addEdge(new Edge<>(node1, node2));
 
         Assert.assertTrue(graph.isEdgeInGraph(new Edge<>(node1, node2)));
@@ -51,8 +45,8 @@ public class OperationsTest {
         HeaderNode<Integer> node1 = new HeaderNode<>(1);
         HeaderNode<Integer> node2 = new HeaderNode<>(5);
 
-        graph.addNode(node1);
-        graph.addNode(node2);
+        graph.addNode(1);
+        graph.addNode(5);
         graph.addEdge(new Edge<>(null, null));
 
         Assert.assertEquals(0, graph.getEdgesCount());
@@ -67,8 +61,8 @@ public class OperationsTest {
     @Test
     public void clearTest() throws NullNodeException{
         Graph<Integer> graph = new Graph<>();
-        graph.addNode(new HeaderNode<>(1));
-        graph.addNode(new HeaderNode<>(5));
+        graph.addNode(1);
+        graph.addNode(5);
         graph.clear();
         Assert.assertTrue(graph.isEmpty());
     }
@@ -77,7 +71,7 @@ public class OperationsTest {
     public void gettingNodeTest() throws NullNodeException{
         Graph<Integer> graph = new Graph<>();
         HeaderNode<Integer> node = new HeaderNode<>(5);
-        graph.addNode(node);
+        graph.addNode(5);
 
         Assert.assertEquals(node, graph.getNodesByInfo(5).get(0));
     }
@@ -85,7 +79,7 @@ public class OperationsTest {
     @Test
     public void isNodeInGraphTest() throws NullNodeException{
         Graph<Integer> graph = new Graph<>();
-        graph.addNode(new HeaderNode<>(5));
+        graph.addNode(5);
 
         Assert.assertTrue(graph.isNodeInGraph(5));
     }
@@ -93,8 +87,8 @@ public class OperationsTest {
     @Test
     public void isEdgeInGraphTest() throws NullNodeException, NullEdgeException{
         Graph<Integer> graph = new Graph<>();
-        graph.addNode(new HeaderNode<>(1));
-        graph.addNode(new HeaderNode<>(5));
+        graph.addNode(1);
+        graph.addNode(5);
         graph.addEdge(new Edge<>(new HeaderNode<>(1), new HeaderNode<>(5)));
 
         Assert.assertTrue(graph.isEdgeInGraph(new Edge<>(new HeaderNode<>(1), new HeaderNode<>(5))));
@@ -103,12 +97,12 @@ public class OperationsTest {
     @Test
     public void gettingNodesCountTest() throws NullNodeException{
         Graph<Integer> graph = new Graph<>();
-        graph.addNode(new HeaderNode<>(1));
-        graph.addNode(new HeaderNode<>(2));
-        graph.addNode(new HeaderNode<>(3));
-        graph.addNode(new HeaderNode<>(4));
-        graph.addNode(new HeaderNode<>(5));
-        graph.addNode(new HeaderNode<>(6));
+        graph.addNode(1);
+        graph.addNode(2);
+        graph.addNode(3);
+        graph.addNode(4);
+        graph.addNode(5);
+        graph.addNode(6);
 
         Assert.assertEquals(6, graph.getNodesCount());
     }
@@ -116,12 +110,12 @@ public class OperationsTest {
     @Test
     public void gettingEdgesCountTest() throws NullNodeException, NullEdgeException{
         Graph<Integer> graph = new Graph<>();
-        graph.addNode(new HeaderNode<>(1));
-        graph.addNode(new HeaderNode<>(2));
-        graph.addNode(new HeaderNode<>(3));
-        graph.addNode(new HeaderNode<>(4));
-        graph.addNode(new HeaderNode<>(5));
-        graph.addNode(new HeaderNode<>(6));
+        graph.addNode(1);
+        graph.addNode(2);
+        graph.addNode(3);
+        graph.addNode(4);
+        graph.addNode(5);
+        graph.addNode(6);
 
         graph.addEdge(new Edge<>(new HeaderNode<>(3), new HeaderNode<>(5)));
         graph.addEdge(new Edge<>(new HeaderNode<>(5), new HeaderNode<>(6)));
@@ -131,14 +125,14 @@ public class OperationsTest {
     }
 
     @Test
-    public void gettingNodeDegreeTest() throws NullNodeException, NullEdgeException {
+    public void gettingNodeDegreeTest() throws NullNodeException, NullEdgeException, NodeNotFoundException {
         Graph<Integer> graph = new Graph<>();
-        graph.addNode(new HeaderNode<>(1));
-        graph.addNode(new HeaderNode<>(2));
-        graph.addNode(new HeaderNode<>(3));
-        graph.addNode(new HeaderNode<>(4));
-        graph.addNode(new HeaderNode<>(5));
-        graph.addNode(new HeaderNode<>(6));
+        graph.addNode(1);
+        graph.addNode(2);
+        graph.addNode(3);
+        graph.addNode(4);
+        graph.addNode(5);
+        graph.addNode(6);
 
 
         graph.addEdge(new Edge<>(graph.getNodesByInfo(1).get(0), graph.getNodesByInfo(4).get(0)));
@@ -153,12 +147,12 @@ public class OperationsTest {
     @Test
     public void deletingNodeTest() throws NullNodeException, NullEdgeException{
         Graph<Integer> graph = new Graph<>();
-        graph.addNode(new HeaderNode<>(1));
-        graph.addNode(new HeaderNode<>(2));
-        graph.addNode(new HeaderNode<>(3));
-        graph.addNode(new HeaderNode<>(4));
-        graph.addNode(new HeaderNode<>(5));
-        graph.addNode(new HeaderNode<>(6));
+        graph.addNode(1);
+        graph.addNode(2);
+        graph.addNode(3);
+        graph.addNode(4);
+        graph.addNode(5);
+        graph.addNode(6);
 
         graph.addEdge(new Edge<>(new HeaderNode<>(1), new HeaderNode<>(4)));
         graph.addEdge(new Edge<>(new HeaderNode<>(1), new HeaderNode<>(6)));
@@ -174,12 +168,12 @@ public class OperationsTest {
     @Test
     public void deletingEdgeTest() throws NullNodeException, NullEdgeException{
         Graph<Integer> graph = new Graph<>();
-        graph.addNode(new HeaderNode<>(1));
-        graph.addNode(new HeaderNode<>(2));
-        graph.addNode(new HeaderNode<>(3));
-        graph.addNode(new HeaderNode<>(4));
-        graph.addNode(new HeaderNode<>(5));
-        graph.addNode(new HeaderNode<>(6));
+        graph.addNode(1);
+        graph.addNode(2);
+        graph.addNode(3);
+        graph.addNode(4);
+        graph.addNode(5);
+        graph.addNode(6);
 
         graph.addEdge(new Edge<>(new HeaderNode<>(1), new HeaderNode<>(4)));
         graph.addEdge(new Edge<>(new HeaderNode<>(1), new HeaderNode<>(6)));
@@ -195,12 +189,12 @@ public class OperationsTest {
     @Test
     public void gettingAllEdgesTest() throws NullNodeException, NullEdgeException{
         Graph<Integer> graph = new Graph<>();
-        graph.addNode(new HeaderNode<>(1));
-        graph.addNode(new HeaderNode<>(2));
-        graph.addNode(new HeaderNode<>(3));
-        graph.addNode(new HeaderNode<>(4));
-        graph.addNode(new HeaderNode<>(5));
-        graph.addNode(new HeaderNode<>(6));
+        graph.addNode(1);
+        graph.addNode(2);
+        graph.addNode(3);
+        graph.addNode(4);
+        graph.addNode(5);
+        graph.addNode(6);
 
         graph.addEdge(new Edge<>(new HeaderNode<>(1), new HeaderNode<>(4)));
         graph.addEdge(new Edge<>(new HeaderNode<>(1), new HeaderNode<>(6)));
@@ -214,12 +208,12 @@ public class OperationsTest {
     @Test
     public void gettingIncidentalEdges() throws NullNodeException, NullEdgeException{
         Graph<Integer> graph = new Graph<>();
-        graph.addNode(new HeaderNode<>(1));
-        graph.addNode(new HeaderNode<>(2));
-        graph.addNode(new HeaderNode<>(3));
-        graph.addNode(new HeaderNode<>(4));
-        graph.addNode(new HeaderNode<>(5));
-        graph.addNode(new HeaderNode<>(6));
+        graph.addNode(1);
+        graph.addNode(2);
+        graph.addNode(3);
+        graph.addNode(4);
+        graph.addNode(5);
+        graph.addNode(6);
 
         graph.addEdge(new Edge<>(new HeaderNode<>(1), new HeaderNode<>(4)));
         graph.addEdge(new Edge<>(new HeaderNode<>(1), new HeaderNode<>(6)));
@@ -239,10 +233,10 @@ public class OperationsTest {
         HeaderNode<Integer> node3 = new HeaderNode<>(3);
         HeaderNode<Integer> node4 = new HeaderNode<>(4);
 
-        graph.addNode(node1);
-        graph.addNode(node2);
-        graph.addNode(node3);
-        graph.addNode(node4);
+        graph.addNode(1);
+        graph.addNode(2);
+        graph.addNode(3);
+        graph.addNode(4);
 
         ListIterator<HeaderNode<Integer>> iterator = graph.getNodeIterator();
         Assert.assertEquals(node1, iterator.next());
@@ -260,10 +254,10 @@ public class OperationsTest {
         HeaderNode<Integer> node3 = new HeaderNode<>(3);
         HeaderNode<Integer> node4 = new HeaderNode<>(4);
 
-        graph.addNode(node1);
-        graph.addNode(node2);
-        graph.addNode(node3);
-        graph.addNode(node4);
+        graph.addNode(1);
+        graph.addNode(2);
+        graph.addNode(3);
+        graph.addNode(4);
 
         graph.addEdge(new Edge<>(node1, node4));
         graph.addEdge(new Edge<>(node1, node3));
@@ -286,10 +280,10 @@ public class OperationsTest {
         HeaderNode<Integer> node3 = new HeaderNode<>(3);
         HeaderNode<Integer> node4 = new HeaderNode<>(4);
 
-        graph.addNode(node1);
-        graph.addNode(node2);
-        graph.addNode(node3);
-        graph.addNode(node4);
+        graph.addNode(1);
+        graph.addNode(2);
+        graph.addNode(3);
+        graph.addNode(4);
 
         graph.addEdge(new Edge<>(node1, node4));
         graph.addEdge(new Edge<>(node1, node3));
@@ -314,10 +308,10 @@ public class OperationsTest {
         HeaderNode<Integer> node3 = new HeaderNode<>(3);
         HeaderNode<Integer> node4 = new HeaderNode<>(4);
 
-        graph.addNode(node1);
-        graph.addNode(node2);
-        graph.addNode(node3);
-        graph.addNode(node4);
+        graph.addNode(1);
+        graph.addNode(2);
+        graph.addNode(3);
+        graph.addNode(4);
 
         graph.addEdge(new Edge<>(node1, node4));
         graph.addEdge(new Edge<>(node1, node3));
@@ -340,10 +334,10 @@ public class OperationsTest {
         HeaderNode<Integer> node3 = new HeaderNode<>(3);
         HeaderNode<Integer> node4 = new HeaderNode<>(4);
 
-        graph.addNode(node1);
-        graph.addNode(node2);
-        graph.addNode(node3);
-        graph.addNode(node4);
+        graph.addNode(1);
+        graph.addNode(2);
+        graph.addNode(3);
+        graph.addNode(4);
 
         ConstantIterator<HeaderNode<Integer>> iterator = graph.getConstantNodeIterator();
         Assert.assertEquals(node1, iterator.next());
@@ -361,10 +355,10 @@ public class OperationsTest {
         HeaderNode<Integer> node3 = new HeaderNode<>(3);
         HeaderNode<Integer> node4 = new HeaderNode<>(4);
 
-        graph.addNode(node1);
-        graph.addNode(node2);
-        graph.addNode(node3);
-        graph.addNode(node4);
+        graph.addNode(1);
+        graph.addNode(2);
+        graph.addNode(3);
+        graph.addNode(4);
 
         graph.addEdge(new Edge<>(node1, node4));
         graph.addEdge(new Edge<>(node1, node3));
@@ -387,10 +381,10 @@ public class OperationsTest {
         HeaderNode<Integer> node3 = new HeaderNode<>(3);
         HeaderNode<Integer> node4 = new HeaderNode<>(4);
 
-        graph.addNode(node1);
-        graph.addNode(node2);
-        graph.addNode(node3);
-        graph.addNode(node4);
+        graph.addNode(1);
+        graph.addNode(2);
+        graph.addNode(3);
+        graph.addNode(4);
 
         graph.addEdge(new Edge<>(node1, node4));
         graph.addEdge(new Edge<>(node1, node3));
@@ -415,10 +409,10 @@ public class OperationsTest {
         HeaderNode<Integer> node3 = new HeaderNode<>(3);
         HeaderNode<Integer> node4 = new HeaderNode<>(4);
 
-        graph.addNode(node1);
-        graph.addNode(node2);
-        graph.addNode(node3);
-        graph.addNode(node4);
+        graph.addNode(1);
+        graph.addNode(2);
+        graph.addNode(3);
+        graph.addNode(4);
 
         graph.addEdge(new Edge<>(node1, node4));
         graph.addEdge(new Edge<>(node1, node3));
@@ -441,10 +435,10 @@ public class OperationsTest {
         HeaderNode<Integer> node3 = new HeaderNode<>(3);
         HeaderNode<Integer> node4 = new HeaderNode<>(4);
 
-        graph.addNode(node1);
-        graph.addNode(node2);
-        graph.addNode(node3);
-        graph.addNode(node4);
+        graph.addNode(1);
+        graph.addNode(2);
+        graph.addNode(3);
+        graph.addNode(4);
 
         for (HeaderNode<Integer> node : graph) {
             Assert.assertTrue(graph.isNodeInGraph(node.getInfo()));
