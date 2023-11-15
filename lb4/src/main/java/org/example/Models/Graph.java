@@ -1,4 +1,12 @@
-package org.example;
+package org.example.Models;
+
+import org.example.Iterators.ConstantEdgeIterator;
+import org.example.Iterators.ConstantNodeIterator;
+import org.example.Iterators.DefaultEdgeIterator;
+import org.example.Iterators.DefaultNodeIterator;
+import org.example.Exceptions.NodeNotFoundException;
+import org.example.Exceptions.NullEdgeException;
+import org.example.Exceptions.NullNodeException;
 
 import java.util.*;
 

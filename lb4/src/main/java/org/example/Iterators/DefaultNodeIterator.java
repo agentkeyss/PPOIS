@@ -1,6 +1,7 @@
-package org.example;
+package org.example.Iterators;
 
-import java.util.Iterator;
+import org.example.Models.HeaderNode;
+
 import java.util.List;
 
 public class DefaultNodeIterator<T> extends NodeIterator<T> {

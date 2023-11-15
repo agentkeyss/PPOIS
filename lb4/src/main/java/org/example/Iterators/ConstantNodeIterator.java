@@ -1,4 +1,6 @@
-package org.example;
+package org.example.Iterators;
+
+import org.example.Models.HeaderNode;
 
 import java.util.Iterator;
 import java.util.List;

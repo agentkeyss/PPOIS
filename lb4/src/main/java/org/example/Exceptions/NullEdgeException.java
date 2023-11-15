@@ -1,4 +1,4 @@
-package org.example;
+package org.example.Exceptions;
 
 public class NullEdgeException extends Exception{
     public NullEdgeException() {

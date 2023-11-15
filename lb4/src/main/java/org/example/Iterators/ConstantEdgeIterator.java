@@ -1,4 +1,6 @@
-package org.example;
+package org.example.Iterators;
+
+import org.example.Models.Edge;
 
 import java.util.List;
 
