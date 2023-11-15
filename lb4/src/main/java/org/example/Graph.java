@@ -126,44 +126,44 @@ public class Graph<T> implements Iterable<HeaderNode<T>>{
         return edges;
     }
 
-    public ListIterator<HeaderNode<T>> getNodeIterator() {
-        return nodeList.listIterator();
+    public DefaultNodeIterator<T> getNodeIterator() {
+        return new DefaultNodeIterator<>(nodeList);
     }
 
-    public ListIterator<Edge<T>> getEdgeIterator() {
-        return edgeList.listIterator();
+    public DefaultEdgeIterator<T> getEdgeIterator() {
+        return new DefaultEdgeIterator<>(edgeList);
     }
 
-    public ListIterator<Edge<T>> getIncidentalEdgesIterator(HeaderNode<T> node) throws NullNodeException {
+    public DefaultEdgeIterator<T> getIncidentalEdgesIterator(HeaderNode<T> node) throws NullNodeException {
         if (node == null) throw new NullNodeException();
 
-        return getIncidentalEdges(node).listIterator();
+        return new DefaultEdgeIterator<>(getIncidentalEdges(node));
     }
 
-    public ListIterator<HeaderNode<T>> getAdjacentNodesIterator(HeaderNode<T> node) throws NullNodeException {
+    public DefaultNodeIterator<T> getAdjacentNodesIterator(HeaderNode<T> node) throws NullNodeException {
         if (node == null) throw new NullNodeException();
 
-        return node.getTrail().listIterator();
+        return new DefaultNodeIterator<>(node.getTrail());
     }
 
-    public ConstantIterator<HeaderNode<T>> getConstantNodeIterator() {
-        return new ConstantIterator<>(nodeList);
+    public ConstantNodeIterator<T> getConstantNodeIterator() {
+        return new ConstantNodeIterator<>(nodeList);
     }
 
-    public ConstantIterator<Edge<T>> getConstantEdgeIterator() {
-        return new ConstantIterator<>(edgeList);
+    public ConstantEdgeIterator<T> getConstantEdgeIterator() {
+        return new ConstantEdgeIterator<>(edgeList);
     }
 
-    public ConstantIterator<Edge<T>> getConstantIncidentalEdgesIterator(HeaderNode<T> node) throws NullNodeException {
+    public ConstantEdgeIterator<T> getConstantIncidentalEdgesIterator(HeaderNode<T> node) throws NullNodeException {
         if (node == null) throw new NullNodeException();
 
-        return new ConstantIterator<>(getIncidentalEdges(node));
+        return new ConstantEdgeIterator<>(getIncidentalEdges(node));
     }
 
-    public ConstantIterator<HeaderNode<T>> getConstantAdjacentNodesIterator(HeaderNode<T> node) throws NullNodeException {
+    public ConstantNodeIterator<T> getConstantAdjacentNodesIterator(HeaderNode<T> node) throws NullNodeException {
         if (node == null) throw new NullNodeException();
 
-        return new ConstantIterator<>(node.getTrail());
+        return new ConstantNodeIterator<>(node.getTrail());
     }
 
     @Override

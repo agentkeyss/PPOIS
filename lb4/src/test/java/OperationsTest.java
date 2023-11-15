@@ -238,11 +238,11 @@ public class OperationsTest {
         graph.addNode(3);
         graph.addNode(4);
 
-        ListIterator<HeaderNode<Integer>> iterator = graph.getNodeIterator();
-        Assert.assertEquals(node1, iterator.next());
-        Assert.assertEquals(node2, iterator.next());
-        Assert.assertEquals(node3, iterator.next());
-        Assert.assertEquals(node4, iterator.next());
+        DefaultNodeIterator<Integer> iterator = graph.getNodeIterator();
+        Assert.assertEquals(1, 0 + iterator.next());
+        Assert.assertEquals(2, 0 + iterator.next());
+        Assert.assertEquals(3, 0 + iterator.next());
+        Assert.assertEquals(4, 0 + iterator.next());
     }
 
     @Test
@@ -265,10 +265,10 @@ public class OperationsTest {
         graph.addEdge(new Edge<>(node2, node1));
         graph.addEdge(new Edge<>(node3, node2));
 
-        ListIterator<HeaderNode<Integer>> iterator = graph.getAdjacentNodesIterator(node1);
-        Assert.assertEquals(node4, iterator.next());
-        Assert.assertEquals(node3, iterator.next());
-        Assert.assertEquals(node2, iterator.next());
+        DefaultNodeIterator<Integer> iterator = graph.getAdjacentNodesIterator(node1);
+        Assert.assertEquals(4, 0 + iterator.next());
+        Assert.assertEquals(3, 0 + iterator.next());
+        Assert.assertEquals(2, 0 + iterator.next());
     }
 
     @Test
@@ -291,12 +291,12 @@ public class OperationsTest {
         graph.addEdge(new Edge<>(node2, node1));
         graph.addEdge(new Edge<>(node3, node2));
 
-        ListIterator<Edge<Integer>> iterator = graph.getEdgeIterator();
-        Assert.assertEquals(new Edge<>(node1, node4), iterator.next());
-        Assert.assertEquals(new Edge<>(node1, node3), iterator.next());
-        Assert.assertEquals(new Edge<>(node1, node2), iterator.next());
-        Assert.assertEquals(new Edge<>(node2, node1), iterator.next());
-        Assert.assertEquals(new Edge<>(node3, node2), iterator.next());
+        DefaultEdgeIterator<Integer> iterator = graph.getEdgeIterator();
+        Assert.assertEquals(List.of(1, 4), iterator.next());
+        Assert.assertEquals(List.of(1, 3), iterator.next());
+        Assert.assertEquals(List.of(1, 2), iterator.next());
+        Assert.assertEquals(List.of(2, 1), iterator.next());
+        Assert.assertEquals(List.of(3, 2), iterator.next());
     }
 
     @Test
@@ -319,10 +319,10 @@ public class OperationsTest {
         graph.addEdge(new Edge<>(node2, node1));
         graph.addEdge(new Edge<>(node3, node2));
 
-        ListIterator<Edge<Integer>> iterator = graph.getIncidentalEdgesIterator(node1);
-        Assert.assertEquals(new Edge<>(node1, node4), iterator.next());
-        Assert.assertEquals(new Edge<>(node1, node3), iterator.next());
-        Assert.assertEquals(new Edge<>(node1, node2), iterator.next());
+        DefaultEdgeIterator<Integer> iterator = graph.getIncidentalEdgesIterator(node1);
+        Assert.assertEquals(List.of(1, 4), iterator.next());
+        Assert.assertEquals(List.of(1, 3), iterator.next());
+        Assert.assertEquals(List.of(1, 2), iterator.next());
     }
 
     @Test
@@ -339,11 +339,11 @@ public class OperationsTest {
         graph.addNode(3);
         graph.addNode(4);
 
-        ConstantIterator<HeaderNode<Integer>> iterator = graph.getConstantNodeIterator();
-        Assert.assertEquals(node1, iterator.next());
-        Assert.assertEquals(node2, iterator.next());
-        Assert.assertEquals(node3, iterator.next());
-        Assert.assertEquals(node4, iterator.next());
+        ConstantNodeIterator<Integer> iterator = graph.getConstantNodeIterator();
+        Assert.assertEquals(1, 0 + iterator.next());
+        Assert.assertEquals(2, 0 + iterator.next());
+        Assert.assertEquals(3, 0 + iterator.next());
+        Assert.assertEquals(4, 0 + iterator.next());
     }
 
     @Test
@@ -366,10 +366,10 @@ public class OperationsTest {
         graph.addEdge(new Edge<>(node2, node1));
         graph.addEdge(new Edge<>(node3, node2));
 
-        ConstantIterator<HeaderNode<Integer>> iterator = graph.getConstantAdjacentNodesIterator(node1);
-        Assert.assertEquals(node4, iterator.next());
-        Assert.assertEquals(node3, iterator.next());
-        Assert.assertEquals(node2, iterator.next());
+        ConstantNodeIterator<Integer> iterator = graph.getConstantAdjacentNodesIterator(node1);
+        Assert.assertEquals(4, 0 + iterator.next());
+        Assert.assertEquals(3, 0 + iterator.next());
+        Assert.assertEquals(2, 0 + iterator.next());
     }
 
     @Test
@@ -392,12 +392,12 @@ public class OperationsTest {
         graph.addEdge(new Edge<>(node2, node1));
         graph.addEdge(new Edge<>(node3, node2));
 
-        ConstantIterator<Edge<Integer>> iterator = graph.getConstantEdgeIterator();
-        Assert.assertEquals(new Edge<>(node1, node4), iterator.next());
-        Assert.assertEquals(new Edge<>(node1, node3), iterator.next());
-        Assert.assertEquals(new Edge<>(node1, node2), iterator.next());
-        Assert.assertEquals(new Edge<>(node2, node1), iterator.next());
-        Assert.assertEquals(new Edge<>(node3, node2), iterator.next());
+        ConstantEdgeIterator<Integer> iterator = graph.getConstantEdgeIterator();
+        Assert.assertEquals(List.of(1, 4), iterator.next());
+        Assert.assertEquals(List.of(1, 3), iterator.next());
+        Assert.assertEquals(List.of(1, 2), iterator.next());
+        Assert.assertEquals(List.of(2, 1), iterator.next());
+        Assert.assertEquals(List.of(3, 2), iterator.next());
     }
 
     @Test
@@ -420,10 +420,10 @@ public class OperationsTest {
         graph.addEdge(new Edge<>(node2, node1));
         graph.addEdge(new Edge<>(node3, node2));
 
-        ConstantIterator<Edge<Integer>> iterator = graph.getConstantIncidentalEdgesIterator(node1);
-        Assert.assertEquals(new Edge<>(node1, node4), iterator.next());
-        Assert.assertEquals(new Edge<>(node1, node3), iterator.next());
-        Assert.assertEquals(new Edge<>(node1, node2), iterator.next());
+        ConstantEdgeIterator<Integer> iterator = graph.getConstantIncidentalEdgesIterator(node1);
+        Assert.assertEquals(List.of(1, 4), iterator.next());
+        Assert.assertEquals(List.of(1, 3), iterator.next());
+        Assert.assertEquals(List.of(1, 2), iterator.next());
     }
 
     @Test
