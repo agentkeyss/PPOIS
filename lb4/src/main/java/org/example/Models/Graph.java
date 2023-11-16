@@ -1,16 +1,13 @@
 package org.example.Models;
 
-import org.example.Iterators.ConstantEdgeIterator;
-import org.example.Iterators.ConstantNodeIterator;
-import org.example.Iterators.DefaultEdgeIterator;
-import org.example.Iterators.DefaultNodeIterator;
+import org.example.Iterators.*;
 import org.example.Exceptions.NodeNotFoundException;
 import org.example.Exceptions.NullEdgeException;
 import org.example.Exceptions.NullNodeException;
 
 import java.util.*;
 
-public class Graph<T> implements Iterable<HeaderNode<T>>{
+public class Graph<T> implements Iterable<T>{
     private final List<Edge<T>> edgeList;
     private final List<HeaderNode<T>> nodeList;
 
@@ -36,7 +33,9 @@ public class Graph<T> implements Iterable<HeaderNode<T>>{
         nodeList.add(new HeaderNode<>(info));
     }
 
-    public void addEdge(Edge<T> edge) throws NullEdgeException {
+    public void addEdge(HeaderNode<T> node1, HeaderNode<T> node2) throws NullEdgeException {
+        Edge<T> edge = new Edge<>(node1, node2);
+
         if (edge == null) throw new NullEdgeException();
 
         if (edge.getStartNode() == null || edge.getFinishNode() == null || !nodeList.contains(edge.getStartNode()) ||
@@ -121,13 +120,13 @@ public class Graph<T> implements Iterable<HeaderNode<T>>{
         edge.getStartNode().getTrail().remove(edge.getFinishNode());
     }
 
-    public List<Edge<T>> getIncidentalEdges(HeaderNode<T> node) throws NullNodeException {
+    public List<Pair<T, T>> getIncidentalEdges(HeaderNode<T> node) throws NullNodeException {
         if (node == null) throw new NullNodeException();
-        List<Edge<T>> edges = new LinkedList<>();
+        List<Pair<T, T>> edges = new LinkedList<>();
 
         for (Edge<T> edge : this.edgeList) {
             if (edge.getStartNode().equals(node)) {
-                edges.add(edge);
+                edges.add(new Pair<>(edge.getStartNode().getInfo(), edge.getFinishNode().getInfo()));
             }
         }
 
@@ -142,10 +141,10 @@ public class Graph<T> implements Iterable<HeaderNode<T>>{
         return new DefaultEdgeIterator<>(edgeList);
     }
 
-    public DefaultEdgeIterator<T> getIncidentalEdgesIterator(HeaderNode<T> node) throws NullNodeException {
+    public Iterator<Pair<T, T>> getIncidentalEdgesIterator(HeaderNode<T> node) throws NullNodeException {
         if (node == null) throw new NullNodeException();
 
-        return new DefaultEdgeIterator<>(getIncidentalEdges(node));
+        return getIncidentalEdges(node).iterator();
     }
 
     public DefaultNodeIterator<T> getAdjacentNodesIterator(HeaderNode<T> node) throws NullNodeException {
@@ -162,10 +161,10 @@ public class Graph<T> implements Iterable<HeaderNode<T>>{
         return new ConstantEdgeIterator<>(edgeList);
     }
 
-    public ConstantEdgeIterator<T> getConstantIncidentalEdgesIterator(HeaderNode<T> node) throws NullNodeException {
+    public ConstantIterator<Pair<T, T>> getConstantIncidentalEdgesIterator(HeaderNode<T> node) throws NullNodeException {
         if (node == null) throw new NullNodeException();
 
-        return new ConstantEdgeIterator<>(getIncidentalEdges(node));
+        return new ConstantIterator<>(getIncidentalEdges(node));
     }
 
     public ConstantNodeIterator<T> getConstantAdjacentNodesIterator(HeaderNode<T> node) throws NullNodeException {
@@ -175,8 +174,8 @@ public class Graph<T> implements Iterable<HeaderNode<T>>{
     }
 
     @Override
-    public Iterator<HeaderNode<T>> iterator() {
-        return nodeList.iterator();
+    public DefaultNodeIterator<T> iterator() {
+        return new DefaultNodeIterator<>(nodeList);
     }
 
     @Override
