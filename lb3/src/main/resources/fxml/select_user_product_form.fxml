@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.effect.*?>
+<?import javafx.scene.image.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.text.*?>
+
+<FlowPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/17.0.2-ea" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.lb3.controllers.ProductsController">
+    <children>
+        <VBox alignment="CENTER" prefHeight="381.0" prefWidth="106.0" style="-fx-background-color: lightgreen;">
+            <children>
+                <ImageView fx:id="accountImage" fitHeight="75.0" fitWidth="86.0" onMouseClicked="#openAccountForm" pickOnBounds="true" preserveRatio="true">
+                    <image>
+                        <Image url="@../images/user.png" />
+                    </image>
+                </ImageView>
+                <Label fx:id="usernameLabel" alignment="CENTER" prefHeight="27.0" prefWidth="42.0" text="User">
+                    <font>
+                        <Font name="System Bold" size="12.0" />
+                    </font>
+                </Label>
+                <VBox alignment="CENTER" prefHeight="242.0" prefWidth="101.0" spacing="30.0">
+                    <children>
+                        <ImageView fitHeight="67.0" fitWidth="58.0" pickOnBounds="true" preserveRatio="true">
+                            <image>
+                                <Image url="@../images/store.png" />
+                            </image>
+                            <effect>
+                                <DropShadow />
+                            </effect>
+                        </ImageView>
+                        <ImageView id="cartImage" fx:id="cartImage" fitHeight="67.0" fitWidth="58.0" onMouseClicked="#openCartForm" pickOnBounds="true" preserveRatio="true">
+                            <image>
+                                <Image url="@../images/shopping-cart.png" />
+                            </image>
+                        </ImageView>
+                    </children>
+                </VBox>
+                <Button fx:id="exitButton" mnemonicParsing="false" onAction="#openLoginForm" text="Выйти">
+                    <font>
+                        <Font name="System Bold" size="12.0" />
+                    </font>
+                </Button>
+            </children>
+            <effect>
+                <Glow />
+            </effect></VBox>
+        <FlowPane alignment="TOP_CENTER" prefHeight="402.0" prefWidth="493.0">
+            <children>
+                <Label text="Товары">
+                    <font>
+                        <Font name="System Bold" size="40.0" />
+                    </font>
+                    <effect>
+                        <Glow />
+                    </effect>
+                </Label>
+                <VBox alignment="CENTER" prefHeight="338.0" prefWidth="488.0" spacing="15.0" style="-fx-background-color: #D3D3D3;">
+               <children>
+                  <Label text="Выберите категорию продукта">
+                     <font>
+                        <Font name="System Bold" size="24.0" />
+                     </font>
+                  </Label>
+                  <Button mnemonicParsing="false" prefHeight="40.0" prefWidth="166.0" text="Акссесуары" />
+                  <Button mnemonicParsing="false" prefHeight="38.0" prefWidth="169.0" text="Компьютеры" />
+                  <Button mnemonicParsing="false" prefHeight="39.0" prefWidth="165.0" text="Смартфоны" />
+                  <Button mnemonicParsing="false" prefHeight="41.0" prefWidth="162.0" text="Планшеты" />
+                  <Button mnemonicParsing="false" prefHeight="39.0" prefWidth="162.0" text="Телевизоры" />
+               </children></VBox>
+            </children>
+        </FlowPane>
+    </children>
+</FlowPane>

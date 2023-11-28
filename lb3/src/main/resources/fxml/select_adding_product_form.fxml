@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.image.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.text.*?>
+
+<FlowPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/17.0.2-ea" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.lb3.controllers.AddingController">
+    <children>
+        <HBox alignment="CENTER_LEFT" prefHeight="94.0" prefWidth="600.0" spacing="205.0" style="-fx-background-color: lightgreen;">
+            <children>
+                <ImageView fx:id="backImage" fitHeight="46.0" fitWidth="46.0" onMouseClicked="#openProductsForm" pickOnBounds="true" preserveRatio="true">
+                    <image>
+                        <Image url="@../images/back.png" />
+                    </image>
+                </ImageView>
+                <VBox alignment="CENTER" prefHeight="94.0" prefWidth="101.0">
+                    <children>
+                        <ImageView fitHeight="69.0" fitWidth="69.0" pickOnBounds="true" preserveRatio="true">
+                            <image>
+                                <Image url="@../images/user.png" />
+                            </image>
+                        </ImageView>
+                        <Label fx:id="usernameLabel" alignment="CENTER" prefHeight="22.0" prefWidth="57.0" text="User">
+                            <font>
+                                <Font name="System Bold" size="12.0" />
+                            </font>
+                        </Label>
+                    </children>
+                </VBox>
+            </children>
+        </HBox>
+        <FlowPane alignment="CENTER" prefHeight="305.0" prefWidth="600.0">
+            <children>
+                <VBox alignment="TOP_CENTER" prefHeight="178.0" prefWidth="222.0" spacing="10.0">
+                    <children>
+                        <Label text="Добавление нового товара">
+                            <font>
+                                <Font name="System Bold" size="15.0" />
+                            </font>
+                        </Label>
+                  <Button mnemonicParsing="false" text="Акссесуары" />
+                  <Button mnemonicParsing="false" text="Компьютеры" />
+                  <Button mnemonicParsing="false" text="Смартфоны" />
+                  <Button mnemonicParsing="false" text="Планшеты" />
+                  <Button mnemonicParsing="false" text="Телевизоры" />
+                    </children>
+                </VBox>
+            </children>
+        </FlowPane>
+    </children>
+</FlowPane>
