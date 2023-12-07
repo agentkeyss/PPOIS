@@ -1,7 +1,8 @@
 package com.example.tictactoe.Servlets;
 
-import com.example.tictactoe.Field;
-import com.example.tictactoe.Sign;
+import com.example.tictactoe.Constants;
+import com.example.tictactoe.Models.Field;
+import com.example.tictactoe.Models.Sign;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
@@ -13,7 +14,7 @@ import jakarta.servlet.RequestDispatcher;
 import java.util.List;
 import java.io.IOException;
 
-@WebServlet(name = "LogicServlet", value = "/logic")
+@WebServlet(name = "LogicServlet", value = Constants.LOGIC_URL)
 public class LogicServlet extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
@@ -24,7 +25,7 @@ public class LogicServlet extends HttpServlet {
         Sign currentSign = field.getField().get(index);
 
         if (Sign.EMPTY != currentSign) {
-            RequestDispatcher dispatcher = getServletContext().getRequestDispatcher("/index.jsp");
+            RequestDispatcher dispatcher = getServletContext().getRequestDispatcher(Constants.INDEX_URL);
             dispatcher.forward(req, resp);
             return;
         }
@@ -43,29 +44,29 @@ public class LogicServlet extends HttpServlet {
                 return;
             }
         } else {
-            currentSession.setAttribute("draw", true);
+            currentSession.setAttribute(Constants.DRAW_ATTRIBUTE, true);
             List<Sign> data = field.getFieldData();
-            currentSession.setAttribute("data", data);
-            resp.sendRedirect("/index.jsp");
+            currentSession.setAttribute(Constants.DATA_ATTRIBUTE, data);
+            resp.sendRedirect(Constants.INDEX_URL);
             return;
         }
 
         List<Sign> data = field.getFieldData();
 
-        currentSession.setAttribute("data", data);
-        currentSession.setAttribute("field", field);
+        currentSession.setAttribute(Constants.DATA_ATTRIBUTE, data);
+        currentSession.setAttribute(Constants.FIELD_ATTRIBUTE, field);
 
-        resp.sendRedirect("/index.jsp");
+        resp.sendRedirect(Constants.INDEX_URL);
     }
 
     private int getSelectedIndex(HttpServletRequest request) {
-        String click = request.getParameter("click");
+        String click = request.getParameter(Constants.CLICK_PARAMETER);
         boolean isNumeric = click.chars().allMatch(Character::isDigit);
         return isNumeric ? Integer.parseInt(click) : 0;
     }
 
     private Field extractField(HttpSession currentSession) {
-        Object fieldAttribute = currentSession.getAttribute("field");
+        Object fieldAttribute = currentSession.getAttribute(Constants.FIELD_ATTRIBUTE);
         if (Field.class != fieldAttribute.getClass()) {
             currentSession.invalidate();
             throw new RuntimeException("Сессия поломалась(");
@@ -76,10 +77,10 @@ public class LogicServlet extends HttpServlet {
     private boolean checkWin(HttpServletResponse response, HttpSession currentSession, Field field) throws IOException {
         Sign winner = field.checkWin();
         if (Sign.CROSS == winner || Sign.NOUGHT == winner) {
-            currentSession.setAttribute("winner", winner);
+            currentSession.setAttribute(Constants.WINNER_ATTRIBUTE, winner);
             List<Sign> data = field.getFieldData();
-            currentSession.setAttribute("data", data);
-            response.sendRedirect("/index.jsp");
+            currentSession.setAttribute(Constants.DATA_ATTRIBUTE, data);
+            response.sendRedirect(Constants.INDEX_URL);
             return true;
         }
         return false;

@@ -1,5 +1,5 @@
-import com.example.tictactoe.Field;
-import com.example.tictactoe.Sign;
+import com.example.tictactoe.Models.Field;
+import com.example.tictactoe.Models.Sign;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;

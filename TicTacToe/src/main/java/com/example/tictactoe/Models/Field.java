@@ -1,4 +1,4 @@
-package com.example.tictactoe;
+package com.example.tictactoe.Models;
 
 import java.util.*;
 import java.util.stream.Collectors;
